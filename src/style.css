@@ -1,14 +1,11 @@
 :root {
-  --bg: #0f172a;
-  --text: #f8fafc;
-  --muted: #94a3b8;
-  --panel: #1e293b;
-  --accent: #38bdf8;
+  --bg: #0b0f1a;
+  --c1: #38bdf8;
+  --c2: #a78bfa;
+  --c3: #f472b6;
 
   color-scheme: dark;
   font-family: system-ui, "Segoe UI", Tahoma, "Noto Sans Arabic", sans-serif;
-  line-height: 1.6;
-  color: var(--text);
   background: var(--bg);
 }
 
@@ -23,49 +20,47 @@ body {
   display: grid;
   place-items: center;
   padding: 1.5rem;
+  overflow: hidden;
 }
 
-.page {
-  width: 100%;
-  max-width: 40rem;
+.title {
+  margin: 0;
+  font-size: clamp(2.5rem, 12vw, 7rem);
+  font-weight: 800;
+  line-height: 1.4;
   text-align: center;
+
+  /* تدرّج لوني يتحرك داخل الكلمة */
+  background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3), var(--c1));
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+
+  animation:
+    shimmer 6s linear infinite,
+    float 4s ease-in-out infinite;
 }
 
-h1 {
-  margin: 0 0 0.5rem;
-  font-size: clamp(1.5rem, 5vw, 2.25rem);
-  line-height: 1.3;
+@keyframes shimmer {
+  to {
+    background-position: 300% 0;
+  }
 }
 
-.lead {
-  margin: 0 0 1.5rem;
-  font-size: clamp(1.125rem, 3.5vw, 1.375rem);
-  color: var(--accent);
-  font-weight: 700;
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-0.12em);
+  }
 }
 
-.stage {
-  display: block;
-  width: 100%;
-  max-width: 28rem;
-  aspect-ratio: 16 / 10;
-  margin: 0 auto;
-  border-radius: 1rem;
-  background: var(--panel);
-}
-
-.hint {
-  margin: 1.5rem 0 0;
-  color: var(--muted);
-  font-size: 0.95rem;
-}
-
-code {
-  direction: ltr;
-  unicode-bidi: isolate;
-  padding: 0.1em 0.4em;
-  border-radius: 0.3em;
-  background: var(--panel);
-  color: var(--text);
-  font-size: 0.9em;
+/* تقليل الحركة: الكلمة ثابتة بألوانها */
+@media (prefers-reduced-motion: reduce) {
+  .title {
+    animation: none;
+  }
 }
