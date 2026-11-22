@@ -1,0 +1,6 @@
+interface:
+  display_name: "Design Posters"
+  short_description: "Create editable posters and web or game graphics"
+  default_prompt: "Use $design-posters to create a poster from my brief and deliver an editable source plus the required image exports."
+policy:
+  allow_implicit_invocation: true

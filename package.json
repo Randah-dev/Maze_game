@@ -1,0 +1,19 @@
+{
+  "name": "web-motion-games-workshop",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "npm run build && wrangler pages deploy dist"
+  },
+  "devDependencies": {
+    "vite": "^8.3.8",
+    "wrangler": "^4.166.0"
+  }
+}

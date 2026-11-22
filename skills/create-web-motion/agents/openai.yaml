@@ -1,0 +1,6 @@
+interface:
+  display_name: "Create Web Motion"
+  short_description: "Web animation, visual timelines, and video export"
+  default_prompt: "Use $create-web-motion to animate this idea for the web or a rendered video, preserving its design and checking the final output."
+policy:
+  allow_implicit_invocation: true
