@@ -4,6 +4,8 @@
 
 المشروع مبني على [Vite](https://vite.dev) بـ JavaScript عادي (بدون أطر عمل)، ومعه مجلد `skills/` فيه مهارات جاهزة يقرؤها وكيل الذكاء الاصطناعي قبل البناء.
 
+يعمل على **Windows** و **macOS** و **Linux**. الأوامر نفسها على كل الأنظمة إلا إذا ذُكر غير ذلك.
+
 ## محتويات المشروع
 
 | الملف / المجلد | الوصف |
@@ -17,15 +19,40 @@
 
 ## المتطلبات
 
-1. **Node.js** بإصدار LTS: حمّله من [nodejs.org](https://nodejs.org) (الحد الأدنى مكتوب في `package.json` تحت `engines`).
+1. **Node.js** بإصدار LTS من [nodejs.org](https://nodejs.org) (الحد الأدنى مكتوب في `package.json` تحت `engines`):
+   - **Windows**: حمّل ملف `.msi` وثبّته بالضغط على Next.
+   - **macOS**: حمّل ملف `.pkg` وثبّته. (أو `brew install node` إذا عندك Homebrew.)
+   - **Linux**: اتبع تعليمات مدير الحزم في صفحة التحميل نفسها.
 2. **حساب Cloudflare مجاني**: سجّل من [dash.cloudflare.com/sign-up](https://dash.cloudflare.com/sign-up).
 
-للتأكد من تثبيت Node.js افتح الطرفية (Terminal) واكتب:
+### فتح الطرفية (Terminal)
+
+| النظام | الطريقة |
+| --- | --- |
+| Windows | افتح قائمة ابدأ واكتب **Terminal** أو **PowerShell** |
+| macOS | اضغط `Cmd + Space` واكتب **Terminal** |
+| Linux | `Ctrl + Alt + T` في أغلب التوزيعات |
+
+> الأسهل للجميع: افتح مجلد المشروع في محرر مثل VS Code، ثم من القائمة **Terminal** ← **New Terminal**. ستفتح الطرفية داخل المجلد مباشرة.
+
+للتأكد من تثبيت Node.js اكتب:
 
 ```bash
 node -v
 npm -v
 ```
+
+## تحميل القالب
+
+- **بدون Git**: من صفحة المستودع على GitHub اضغط **Code** ← **Download ZIP**، ثم فك الضغط.
+- **باستخدام Git**:
+
+  ```bash
+  git clone https://github.com/cl0udz1/sdc_web_workshop.git
+  cd sdc_web_workshop
+  ```
+
+> على macOS: إذا ظهرت نافذة تطلب تثبيت **Command Line Developer Tools** عند أول استخدام لـ `git`، اضغط **Install** وانتظر حتى ينتهي ثم أعد الأمر.
 
 ## التشغيل
 
@@ -38,7 +65,7 @@ npm run dev
 
 افتح الرابط الذي يظهر (غالبًا `http://localhost:5173`). إذا رأيت كلمة **ويب بلاحدود** تتحرك بألوانها، فكل شيء يعمل.
 
-لإيقاف التشغيل اضغط `Ctrl + C` في الطرفية.
+لإيقاف التشغيل اضغط `Ctrl + C` في الطرفية (على macOS أيضًا `Ctrl` وليس `Cmd`).
 
 ## البدء مع الذكاء الاصطناعي
 
@@ -50,10 +77,10 @@ npm run dev
 
 | الأداة | متى تحتاجها | التثبيت |
 | --- | --- | --- |
-| three | رسومات وألعاب ثلاثية الأبعاد | `npm i three` (يثبّتها الوكيل) |
-| Playwright | تصدير الموشن لإطارات/فيديو أو الملصق لصورة PNG | `npm i -D playwright` (يثبّتها الوكيل) |
-| Blender | صنع نماذج 3D وتصديرها GLB | حمّله من [blender.org](https://www.blender.org/download/). لا يحتاج Python منفصل |
-| ffmpeg | تحويل إطارات الموشن إلى فيديو MP4 | حمّله من [ffmpeg.org](https://ffmpeg.org/download.html) |
+| three | رسومات وألعاب ثلاثية الأبعاد | `npm i three` (يثبّتها الوكيل، نفس الأمر لكل الأنظمة) |
+| Playwright | تصدير الموشن لإطارات/فيديو أو الملصق لصورة PNG | `npm i -D playwright` (يثبّتها الوكيل، نفس الأمر لكل الأنظمة) |
+| Blender | صنع نماذج 3D وتصديرها GLB | حمّله من [blender.org](https://www.blender.org/download/). على macOS اسحبه إلى مجلد Applications. لا يحتاج Python منفصل |
+| ffmpeg | تحويل إطارات الموشن إلى فيديو MP4 | Windows: `winget install Gyan.FFmpeg` · macOS: `brew install ffmpeg` · Linux: `sudo apt install ffmpeg` |
 
 ## البناء
 
@@ -93,18 +120,27 @@ npm run deploy
 4. اضغط **Deploy** وانتظر حتى يظهر الرابط.
 
 > أسماء الأزرار في لوحة Cloudflare قد تتغير قليلًا مع الوقت، لكن الفكرة واحدة: إنشاء مشروع Pages ورفع مجلد `dist`.
+>
+> على macOS: مجلد `dist` يظهر في Finder داخل مجلد المشروع. إذا لم تجده، تأكد أنك شغّلت `npm run build`.
 
 ## أشهر المشاكل وحلولها
 
-### أمر غير معروف (`'npm' is not recognized` أو `command not found`)
+### أمر غير معروف
+الرسالة تختلف حسب النظام:
+- Windows: `'npm' is not recognized`
+- macOS: `zsh: command not found: npm`
+- Linux: `npm: command not found`
+
+الحل:
 - Node.js غير مثبت أو لم تُعِد فتح الطرفية بعد تثبيته. ثبّته من [nodejs.org](https://nodejs.org)، ثم **أغلق الطرفية وافتحها من جديد**.
 - تأكد أنك داخل مجلد المشروع (المجلد الذي فيه `package.json`) قبل تشغيل أي أمر.
-- في PowerShell على Windows إذا ظهرت رسالة عن `running scripts is disabled`، استخدم `npm.cmd` بدل `npm`، أو افتح **Command Prompt** بدل PowerShell.
+- **Windows فقط**: إذا ظهرت في PowerShell رسالة عن `running scripts is disabled`، استخدم `npm.cmd` بدل `npm`، أو افتح **Command Prompt** بدل PowerShell.
 
 ### فشل `npm install`
 - أسطر `npm warn` (تحذيرات) طبيعية ولا تعني أن التثبيت فشل. الفشل الحقيقي يظهر بكلمة `npm error`.
 - تأكد من اتصال الإنترنت.
 - تأكد أن إصدار Node.js حديث (`node -v`) ولا يقل عن المكتوب في `engines`.
+- **macOS و Linux**: إذا ظهر خطأ `EACCES` (صلاحيات)، **لا تستخدم `sudo`**. تأكد أن المشروع داخل مجلدك الشخصي (مثل Desktop أو Documents) وليس في مجلد نظام.
 - احذف مجلد `node_modules` ثم أعد المحاولة:
 
   ```bash
