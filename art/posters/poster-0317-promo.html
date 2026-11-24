@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <title>بوستر ترويجي · 03:17 The Last Memory</title>
+    <!--
+      بوستر ترويجي (1080×1350): جوال في المنتصف يعرض لقطة حقيقية من اللعبة، وحوله بطاقات وعناصر من القصة.
+      الصور في assets/ مأخوذة من اللعبة نفسها (رسومات src/maze/story/art.js ولقطة من المرحلة الأولى).
+      النصوص والألوان في هذا الملف.
+    -->
+    <link rel="stylesheet" href="../../src/fonts.css" />
+    <style>
+      :root {
+        --night: #160a0d;
+        --wine: #4a1d22;
+        --wine-2: #6b2a30;
+        --gold: #c9a45c;
+        --gold-soft: #e3c58e;
+        --cream: #f2e7d4;
+        --cream-dim: rgba(242, 231, 212, 0.72);
+        --card: rgba(34, 16, 19, 0.94);
+      }
+
+      html,
+      body {
+        margin: 0;
+        background: #0a0506;
+      }
+
+      #poster {
+        position: relative;
+        width: 1080px;
+        height: 1350px;
+        overflow: hidden;
+        color: var(--cream);
+        font-family: "Inter", "IBM Plex Sans Arabic", sans-serif;
+        /* خلفية هادئة: ضوء شمعة دافئ من الأعلى، ونبيذي عميق من الأسفل */
+        background:
+          radial-gradient(ellipse 70% 55% at 78% 8%, rgba(242, 196, 140, 0.34), transparent 70%),
+          radial-gradient(ellipse 80% 60% at 10% 100%, rgba(107, 42, 48, 0.85), transparent 70%),
+          linear-gradient(160deg, #2a1216 0%, var(--night) 55%, #1d0c10 100%);
+      }
+
+      .grain {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.5;
+        mix-blend-mode: overlay;
+      }
+
+      .maze {
+        position: absolute;
+        left: 80px;
+        top: 290px;
+        width: 920px;
+        height: 920px;
+      }
+
+      /* ───── العنوان ───── */
+      .head {
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        direction: ltr;
+      }
+
+      .head::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 46%;
+        width: 760px;
+        height: 300px;
+        transform: translate(-50%, -50%);
+        background: radial-gradient(ellipse at center, rgba(255, 236, 205, 0.26), rgba(242, 217, 170, 0.08) 45%, transparent 70%);
+        z-index: -1;
+      }
+
+      .title {
+        margin: 0;
+        font-family: "Roboto Mono", monospace;
+        font-weight: 500;
+        font-size: 132px;
+        line-height: 1;
+        letter-spacing: 0.02em;
+        color: var(--cream);
+        -webkit-text-stroke: 5px #0b0506;
+        paint-order: stroke fill;
+        text-shadow: 0 0 30px rgba(255, 236, 205, 0.32);
+      }
+
+      .subtitle {
+        margin: 16px 0 0;
+        font-family: "Cinzel", serif;
+        font-weight: 700;
+        font-size: 30px;
+        letter-spacing: 0.42em;
+        margin-left: 0.42em;
+        color: var(--gold-soft);
+      }
+
+      /* ───── الجوال ───── */
+      .phone {
+        position: absolute;
+        left: 260px;
+        top: 300px;
+        width: 400px;
+        height: 866px;
+        border-radius: 64px;
+        background: #0b0708;
+        padding: 13px;
+        box-sizing: border-box;
+        box-shadow:
+          0 0 0 2px #3a2a28,
+          0 40px 90px rgba(0, 0, 0, 0.65),
+          0 0 120px rgba(242, 196, 140, 0.12);
+        z-index: 3;
+      }
+
+      .screen {
+        width: 100%;
+        height: 100%;
+        border-radius: 52px;
+        overflow: hidden;
+        background: #050303;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .screen img {
+        display: block;
+        width: 100%;
+        flex: 1;
+        min-height: 0;
+        object-fit: cover;
+        object-position: center;
+      }
+
+      .island {
+        position: absolute;
+        top: 26px;
+        left: 50%;
+        width: 118px;
+        height: 32px;
+        transform: translateX(-50%);
+        border-radius: 20px;
+        background: #000;
+      }
+
+      /* ───── البطاقات العائمة ───── */
+      .card {
+        position: absolute;
+        box-sizing: border-box;
+        border-radius: 24px;
+        background: var(--card);
+        border: 1px solid rgba(201, 164, 92, 0.35);
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+      }
+
+      .memory {
+        left: 70px;
+        top: 560px;
+        width: 340px;
+        padding: 18px 18px 22px;
+        transform: rotate(-8deg);
+        z-index: 2;
+        text-align: center;
+      }
+
+      .memory img {
+        display: block;
+        width: 100%;
+        border-radius: 10px;
+      }
+
+      .eyebrow {
+        margin: 14px 0 4px;
+        font-family: "IBM Plex Sans Arabic", sans-serif;
+        font-size: 17px;
+        font-weight: 500;
+        color: var(--gold);
+      }
+
+      .name {
+        margin: 0;
+        font-family: "IBM Plex Sans Arabic", sans-serif;
+        font-size: 26px;
+        font-weight: 700;
+      }
+
+      .num {
+        font-family: "Roboto Mono", monospace;
+      }
+
+      .notif {
+        left: 600px;
+        top: 470px;
+        width: 330px;
+        padding: 18px;
+        transform: rotate(6deg);
+        z-index: 4;
+        background: rgba(44, 32, 30, 0.96);
+        border-color: rgba(255, 255, 255, 0.1);
+      }
+
+      .notif-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-family: "IBM Plex Sans Arabic", sans-serif;
+        font-size: 16px;
+        color: var(--cream-dim);
+      }
+
+      .notif-from {
+        margin: 8px 0 12px;
+        font-family: "IBM Plex Sans Arabic", sans-serif;
+        font-size: 21px;
+        font-weight: 700;
+      }
+
+      /* سطور مموهة بدل نص الرسالة */
+      .hidden-lines {
+        display: grid;
+        gap: 10px;
+        padding: 4px 0 6px;
+      }
+
+      .hidden-lines i {
+        display: block;
+        height: 14px;
+        border-radius: 7px;
+        background: rgba(242, 231, 212, 0.22);
+        filter: blur(2.5px);
+      }
+
+      .hidden-lines i:nth-child(2) {
+        width: 82%;
+      }
+
+      .hidden-lines i:nth-child(3) {
+        width: 55%;
+      }
+
+      .paper {
+        right: 52px;
+        top: 905px;
+        width: 250px;
+        transform: rotate(9deg);
+        z-index: 4;
+        padding: 0;
+        border: none;
+        border-radius: 4px;
+        overflow: hidden;
+      }
+
+      .paper img {
+        display: block;
+        width: 100%;
+      }
+
+      /* شارات دائرية */
+      .badge {
+        position: absolute;
+        border-radius: 50%;
+        overflow: hidden;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55), 0 0 0 5px var(--wine-2), 0 0 0 7px rgba(201, 164, 92, 0.55);
+        z-index: 5;
+      }
+
+      .badge img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .b-clock {
+        left: 120px;
+        top: 760px;
+        width: 210px;
+        height: 210px;
+        background: #f1e8d6;
+      }
+
+      .b-clock img {
+        object-fit: contain;
+      }
+
+      .hands {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      .b-key {
+        left: 130px;
+        top: 1020px;
+        width: 150px;
+        height: 150px;
+      }
+
+      .b-bunny {
+        left: 690px;
+        top: 760px;
+        width: 128px;
+        height: 128px;
+      }
+
+      .b-bracelet {
+        left: 284px;
+        top: 488px;
+        width: 92px;
+        height: 92px;
+      }
+
+      .tagline {
+        position: absolute;
+        bottom: 58px;
+        left: 0;
+        right: 0;
+        margin: 0;
+        text-align: center;
+        font-family: "Inter", sans-serif;
+        font-size: 26px;
+        letter-spacing: 0.1em;
+        color: var(--cream-dim);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="poster">
+      <!-- متاهة شفافة خلف الجوال (خطوط فقط، تظهر الألوان من خلفها) -->
+      <svg id="maze" class="maze" viewBox="0 0 920 920" aria-hidden="true"></svg>
+
+      <div class="head">
+        <h1 class="title">03:17</h1>
+        <p class="subtitle">THE LAST MEMORY</p>
+      </div>
+
+      <!-- الجوال: لقطة حقيقية من المرحلة الأولى -->
+      <div class="phone">
+        <div class="screen">
+          <img src="assets/phone-corridor.png" alt="رسمة ممر الفندق وفي آخره ساعة واقفة على 03:17" />
+        </div>
+        <div class="island"></div>
+      </div>
+
+      <!-- رسالة من مجهول، محتواها مخفي -->
+      <div class="card notif">
+        <div class="notif-head"><span>رسالة جديدة</span><span class="num">03:17</span></div>
+        <p class="notif-from">مجهول</p>
+        <div class="hidden-lines" aria-label="محتوى الرسالة مخفي"><i></i><i></i><i></i></div>
+      </div>
+
+      <p class="tagline" dir="ltr">Some memories never leave.</p>
+
+      <svg class="grain" viewBox="0 0 1080 1350" aria-hidden="true">
+        <filter id="g"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="4" /><feColorMatrix type="saturate" values="0" /><feComponentTransfer><feFuncA type="linear" slope="0.12" /></feComponentTransfer></filter>
+        <rect width="1080" height="1350" filter="url(#g)" />
+      </svg>
+    </div>
+    <script>
+      // متاهة حقيقية (خلايا مربعة) تُرسم كخطوط فقط. غيّر SEED للحصول على شكل آخر.
+      const N = 11;
+      const SIZE = 920;
+      const PAD = 20;
+      const cell = (SIZE - PAD * 2) / N;
+      let seed = 317;
+      const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+      const walls = { h: [], v: [] }; // h[y][x]: جدار فوق الخلية، v[y][x]: جدار يسار الخلية
+      for (let y = 0; y <= N; y++) walls.h.push(Array(N).fill(true));
+      for (let y = 0; y < N; y++) walls.v.push(Array(N + 1).fill(true));
+      const seen = Array.from({ length: N }, () => Array(N).fill(false));
+      const stack = [[Math.floor(N / 2), Math.floor(N / 2)]];
+      seen[stack[0][1]][stack[0][0]] = true;
+      while (stack.length) {
+        const [x, y] = stack[stack.length - 1];
+        const opts = [[1, 0], [-1, 0], [0, 1], [0, -1]].filter(([dx, dy]) => {
+          const nx = x + dx;
+          const ny = y + dy;
+          return nx >= 0 && ny >= 0 && nx < N && ny < N && !seen[ny][nx];
+        });
+        if (!opts.length) {
+          stack.pop();
+          continue;
+        }
+        const [dx, dy] = opts[Math.floor(rnd() * opts.length)];
+        const nx = x + dx;
+        const ny = y + dy;
+        if (dx === 1) walls.v[y][x + 1] = false;
+        if (dx === -1) walls.v[y][x] = false;
+        if (dy === 1) walls.h[y + 1][x] = false;
+        if (dy === -1) walls.h[y][x] = false;
+        seen[ny][nx] = true;
+        stack.push([nx, ny]);
+      }
+      walls.h[0][Math.floor(N / 2)] = false; // مدخل
+      walls.h[N][2] = false; // مخرج
+      let d = '';
+      for (let y = 0; y <= N; y++) for (let x = 0; x < N; x++) if (walls.h[y][x]) d += `M${PAD + x * cell} ${PAD + y * cell}h${cell}`;
+      for (let y = 0; y < N; y++) for (let x = 0; x <= N; x++) if (walls.v[y][x]) d += `M${PAD + x * cell} ${PAD + y * cell}v${cell}`;
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('d', d);
+      path.setAttribute('fill', 'none');
+      path.setAttribute('stroke', 'rgba(227, 197, 142, 0.28)');
+      path.setAttribute('stroke-width', '9');
+      path.setAttribute('stroke-linecap', 'round');
+      document.getElementById('maze').appendChild(path);
+    </script>
+  </body>
+</html>

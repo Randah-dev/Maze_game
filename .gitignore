@@ -25,3 +25,30 @@ desktop.ini
 .vscode/*
 !.vscode/extensions.json
 .idea/
+
+# Private / local files (never commit)
+*.local
+.claude/settings.local.json
+.claude/local/
+.cache/
+.npmrc
+.netrc
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+id_ed25519*
+credentials*.json
+service-account*.json
+secrets.*
+*.secret
+.vercel/
+.railway/
+.eslintcache
+
+# Temporary / backups
+*.tmp
+*.bak
+*.swp
+~$*

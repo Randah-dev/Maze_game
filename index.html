@@ -2,14 +2,234 @@
 <html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0b0f1a" />
-    <title>ويب بلاحدود</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0c0505" />
+    <meta name="description" content="03:17 · The Last Memory: لعبة غموض ثلاثية الأبعاد داخل فندق قديم. خمس مراحل، وذكرى واحدة ما زالت تنتظرك." />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%235c0c10'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%23c9a45c' stroke-width='2.2'/%3E%3Cpath d='M16 16V9M16 16l5 2' stroke='%23c9a45c' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E" />
+    <title>03:17 · The Last Memory</title>
   </head>
   <body>
-    <main>
-      <h1 class="title">ويب بلاحدود</h1>
-    </main>
+    <div id="app">
+      <canvas id="scene" aria-label="ممرات الفندق ثلاثية الأبعاد"></canvas>
+      <div class="vignette" aria-hidden="true"></div>
+      <div id="flash" class="flash" aria-hidden="true"></div>
+      <div id="fade" class="fade" aria-hidden="true"></div>
+
+      <!-- طبقة اللمس: عصا الحركة والنظر بالسحب -->
+      <div id="touch-layer" class="touch-layer" hidden>
+        <div id="joystick" class="joystick" aria-hidden="true"><div id="joystick-knob" class="joystick-knob"></div></div>
+      </div>
+
+      <!-- زر الصوت -->
+      <div class="top-bar">
+        <button id="btn-mute" class="icon-btn" type="button" aria-label="كتم الصوت" aria-pressed="false" title="الصوت (M)">
+          <svg class="icon-sound" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" /><path class="wave" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" /></svg>
+          <svg class="icon-muted" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" /><path class="wave" d="M17 9l5 6M22 9l-5 6" /></svg>
+        </button>
+      </div>
+
+      <!-- واجهة اللعب -->
+      <div id="hud" class="hud" hidden>
+        <div class="hud-top">
+          <div class="hud-stat hud-stage">
+            <span id="hud-ordinal" class="hud-label"></span>
+            <span id="hud-stage" class="hud-value hud-name"></span>
+          </div>
+          <div id="hud-timer" class="hud-stat hud-timer">
+            <span class="hud-label">الوقت</span>
+            <span id="hud-time" class="hud-value" dir="ltr">00:00</span>
+          </div>
+          <button id="btn-pause" class="icon-btn" type="button" aria-label="إيقاف مؤقت" title="إيقاف مؤقت (P)">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14" /></svg>
+          </button>
+        </div>
+        <p id="hud-objective" class="hud-objective"></p>
+        <div class="crosshair" aria-hidden="true"></div>
+        <div id="subtitle" class="subtitle" role="status" aria-live="polite" hidden>
+          <span id="subtitle-who" class="subtitle-who"></span>
+          <span id="subtitle-text" class="subtitle-text"></span>
+        </div>
+        <p id="hud-hint" class="hud-hint">
+          <span class="hint-desktop"><kbd dir="ltr">W A S D</kbd> أو الأسهم للمشي · الفأرة للنظر · <kbd dir="ltr">Shift</kbd> للجري · <kbd dir="ltr">F</kbd> الكشاف · <kbd dir="ltr">Esc</kbd> إيقاف</span>
+          <span class="hint-touch">اسحب يسار الشاشة للمشي، ويمينها للنظر</span>
+        </p>
+        <div id="hud-toast" class="hud-toast" role="status" aria-live="polite"></div>
+      </div>
+
+      <!-- القائمة الرئيسية -->
+      <section id="screen-menu" class="screen screen-menu" aria-labelledby="menu-title">
+        <div class="panel panel-menu">
+          <h1 id="menu-title" class="logo" dir="ltr">03:17</h1>
+          <p class="logo-sub" dir="ltr">The Last Memory</p>
+          <p class="tagline" dir="ltr">Some memories never leave.</p>
+          <p class="lede">وصلتك رسالة من رقم ما تعرفه: صورة لفندق قديم، وجملة وحدة. رحت تشوف وش القصة... والفندق ما خلّاك تطلع.</p>
+
+          <fieldset class="difficulty">
+            <legend>الصعوبة (مدة المؤقت)</legend>
+            <div class="segmented">
+              <label><input type="radio" name="difficulty" value="easy" /><span>سهل</span></label>
+              <label><input type="radio" name="difficulty" value="medium" checked /><span>متوسط</span></label>
+              <label><input type="radio" name="difficulty" value="hard" /><span>صعب</span></label>
+            </div>
+          </fieldset>
+
+          <div class="actions">
+            <button id="btn-continue" class="btn btn-primary" type="button" hidden>كمّل القصة</button>
+            <button id="btn-play" class="btn btn-primary" type="button">ابدأ القصة</button>
+            <button id="btn-howto" class="btn btn-ghost" type="button">طريقة اللعب</button>
+          </div>
+          <p id="menu-stats" class="stats"></p>
+        </div>
+      </section>
+
+      <!-- طريقة اللعب -->
+      <section id="screen-howto" class="screen" aria-labelledby="howto-title" hidden>
+        <div class="panel">
+          <h2 id="howto-title">طريقة اللعب</h2>
+          <p class="lede">في كل مرحلة فيه غرض واحد يخصّك، ولازم تلقاه قبل ما ينفتح باب المخرج. اللوحات والأغراض الثانية اختيارية: قرّب منها وطالع فيها وبتعرف أكثر.</p>
+          <ul class="keys">
+            <li><span><kbd dir="ltr">W</kbd> <kbd dir="ltr">↑</kbd></span> قدّام</li>
+            <li><span><kbd dir="ltr">S</kbd> <kbd dir="ltr">↓</kbd></span> ورا</li>
+            <li><span><kbd dir="ltr">A</kbd> <kbd dir="ltr">D</kbd></span> يسار ويمين</li>
+            <li><span>الفأرة</span> تلفّت</li>
+            <li><span><kbd dir="ltr">Shift</kbd></span> اجرِ</li>
+            <li><span><kbd dir="ltr">F</kbd></span> شغّل الكشاف أو طفّه</li>
+            <li><span><kbd dir="ltr">Space</kbd></span> تخطَّ الجملة الحالية</li>
+            <li><span><kbd dir="ltr">Esc</kbd> <kbd dir="ltr">P</kbd></span> إيقاف مؤقت</li>
+            <li><span><kbd dir="ltr">M</kbd></span> كتم الصوت</li>
+          </ul>
+          <p class="note">ضايع؟ اللوحات الصغيرة عند التفرعات تأشّر على طريق المخرج.</p>
+          <p class="note">على الجوال: اسحب في يسار الشاشة للمشي، وفي يمينها للنظر.</p>
+          <div class="actions">
+            <button id="btn-howto-back" class="btn btn-primary" type="button">رجوع</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- الرسالة الأولى -->
+      <section id="screen-prologue" class="screen screen-dark" aria-labelledby="prologue-title" hidden>
+        <div class="phone">
+          <p id="prologue-clock" class="phone-clock" dir="ltr">03:17</p>
+          <div class="notif">
+            <div class="notif-head">
+              <span id="prologue-app" class="notif-app"></span>
+              <span class="notif-time">الآن</span>
+            </div>
+            <h2 id="prologue-title" class="notif-from"></h2>
+            <div class="notif-photo"><img id="prologue-img" class="notif-img" alt="صورة لفندق قديم في الليل، شباك واحد فقط مضاء" /></div>
+            <p id="prologue-text" class="notif-text"></p>
+          </div>
+          <p id="prologue-after" class="phone-after"></p>
+          <button id="btn-prologue" class="btn btn-primary" type="button">روح للفندق</button>
+        </div>
+      </section>
+
+      <!-- مقدمة المرحلة -->
+      <section id="screen-intro" class="screen screen-dark screen-intro" aria-labelledby="intro-name" hidden>
+        <div class="intro">
+          <p id="intro-ordinal" class="eyebrow"></p>
+          <h2 id="intro-name" class="intro-name"></h2>
+          <p id="intro-place" class="intro-place"></p>
+          <p id="intro-text" class="intro-text"></p>
+          <p id="intro-goal" class="intro-goal"></p>
+          <button id="btn-intro" class="btn btn-primary" type="button">ابدأ</button>
+        </div>
+      </section>
+
+      <!-- بطاقة ذكرى -->
+      <section id="screen-card" class="screen" aria-labelledby="card-name" hidden>
+        <div class="panel panel-card">
+          <p id="card-count" class="eyebrow"></p>
+          <img id="card-img" class="card-img" alt="" />
+          <h2 id="card-name"></h2>
+          <p id="card-desc" class="card-desc"></p>
+          <button id="btn-card" class="btn btn-primary" type="button">كمّل</button>
+        </div>
+      </section>
+
+      <!-- رسالة مكتوبة -->
+      <section id="screen-letter" class="screen" aria-labelledby="letter-title" hidden>
+        <div class="letter">
+          <p id="letter-title" class="eyebrow"></p>
+          <div id="letter-body" class="letter-body"></div>
+          <button id="btn-letter" class="btn btn-primary" type="button">كمّل</button>
+        </div>
+      </section>
+
+      <!-- الإيقاف المؤقت -->
+      <section id="screen-pause" class="screen" aria-labelledby="pause-title" hidden>
+        <div class="panel panel-small">
+          <h2 id="pause-title">إيقاف مؤقت</h2>
+          <p id="pause-info" class="lede"></p>
+          <div class="actions actions-col">
+            <button id="btn-resume" class="btn btn-primary" type="button">كمّل</button>
+            <button id="btn-restart" class="btn btn-ghost" type="button">ابدأ المرحلة من جديد</button>
+            <button id="btn-pause-menu" class="btn btn-ghost" type="button">القائمة الرئيسية</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- نهاية المرحلة -->
+      <section id="screen-outro" class="screen screen-dark" aria-labelledby="outro-title" hidden>
+        <div class="panel panel-outro">
+          <p id="outro-ordinal" class="eyebrow"></p>
+          <h2 id="outro-title"></h2>
+          <p id="outro-text" class="outro-text"></p>
+          <div class="reward">
+            <img id="outro-img" class="reward-img" alt="" />
+            <div>
+              <p class="reward-label">ذكرى مستعادة</p>
+              <p id="outro-item" class="reward-name"></p>
+              <p id="outro-time" class="reward-time"></p>
+            </div>
+          </div>
+          <div class="next">
+            <p class="next-label">المكان التالي</p>
+            <p id="outro-next" class="next-place"></p>
+            <p id="outro-teaser" class="next-teaser"></p>
+          </div>
+          <div class="actions actions-col">
+            <button id="btn-next" class="btn btn-primary" type="button">المرحلة التالية</button>
+            <button id="btn-outro-menu" class="btn btn-ghost" type="button">القائمة الرئيسية</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- انتهاء الوقت -->
+      <section id="screen-lose" class="screen screen-lose" aria-labelledby="lose-title" hidden>
+        <div class="panel panel-small">
+          <p class="eyebrow" id="lose-level"></p>
+          <h2 id="lose-title">خلص الوقت</h2>
+          <p class="lede">الأنوار طفت وأنت لسه تدوّر. الممرات بتتغير... جرّب طريق ثاني.</p>
+          <div class="actions actions-col">
+            <button id="btn-retry" class="btn btn-primary" type="button">حاول مرة ثانية</button>
+            <button id="btn-lose-menu" class="btn btn-ghost" type="button">القائمة الرئيسية</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- النهاية -->
+      <section id="screen-ending" class="screen screen-ending" aria-labelledby="ending-time" hidden>
+        <div class="ending">
+          <p id="ending-1" class="ending-line"></p>
+          <p id="ending-2" class="ending-line"></p>
+          <p id="ending-time" class="ending-time" dir="ltr"></p>
+          <p id="ending-end" class="ending-end" dir="ltr"></p>
+          <button id="btn-ending" class="btn btn-ghost" type="button">العودة للقائمة</button>
+        </div>
+      </section>
+
+      <!-- خطأ في تشغيل الرسوم -->
+      <section id="screen-error" class="screen" aria-labelledby="error-title" hidden>
+        <div class="panel panel-small">
+          <h2 id="error-title">ما قدرنا نشغّل الرسوم</h2>
+          <p id="error-text" class="lede">يبدو أن متصفحك أو جهازك ما يدعم WebGL، أو أن تسريع الرسوم مطفأ. جرّب متصفح حديث مثل Chrome أو Edge أو Firefox.</p>
+          <div class="actions">
+            <button id="btn-reload" class="btn btn-primary" type="button">حاول مرة ثانية</button>
+          </div>
+        </div>
+      </section>
+    </div>
 
     <script type="module" src="/src/main.js"></script>
   </body>

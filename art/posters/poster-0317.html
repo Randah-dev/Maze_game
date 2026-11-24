@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <title>بوستر 03:17 · The Last Memory</title>
+    <!--
+      المصدر القابل للتعديل لبوستر اللعبة (1080×1920).
+      النصوص في أسفل الملف، والألوان في متغيرات :root، والرسمة تُبنى بالكود في <script>.
+      للتصدير: شغّل npm run dev ثم افتح /art/posters/poster-0317.html
+    -->
+    <style>
+      @font-face { font-family: "IBM Plex Sans Arabic"; font-weight: 400; src: url("../../src/assets/fonts/ibm-plex-sans-arabic-arabic-400-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+200C-200E, U+FB50-FDFF, U+FE70-FEFF; }
+      @font-face { font-family: "IBM Plex Sans Arabic"; font-weight: 500; src: url("../../src/assets/fonts/ibm-plex-sans-arabic-arabic-500-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+200C-200E, U+FB50-FDFF, U+FE70-FEFF; }
+      @font-face { font-family: "IBM Plex Sans Arabic"; font-weight: 700; src: url("../../src/assets/fonts/ibm-plex-sans-arabic-arabic-700-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+200C-200E, U+FB50-FDFF, U+FE70-FEFF; }
+      @font-face { font-family: "Inter"; font-weight: 400; src: url("../../src/assets/fonts/inter-latin-400-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Cinzel"; font-weight: 400; src: url("../../src/assets/fonts/cinzel-latin-400-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Cinzel"; font-weight: 700; src: url("../../src/assets/fonts/cinzel-latin-700-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Roboto Mono"; font-weight: 400; src: url("../../src/assets/fonts/roboto-mono-latin-400-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Roboto Mono"; font-weight: 500; src: url("../../src/assets/fonts/roboto-mono-latin-500-normal.woff2") format("woff2"); }
+
+      :root {
+        /* ألوان هادئة: نبيذي مطفي، ذهبي ناعم، كريمي */
+        --night: #140a0c;
+        --ceiling: #1b0e11;
+        --wall-near: #5b2a2e;
+        --wall-far: #3a1a1e;
+        --wainscot: #2b1517;
+        --gold: #c4a064;
+        --door: #3b1c20;
+        --runner: #6e2a2e;
+        --floor: #22130f;
+        --glow: #f2d9aa;
+        --cream: #f1e6d3;
+        --cream-dim: rgba(241, 230, 211, 0.72);
+      }
+
+      html,
+      body {
+        margin: 0;
+        background: #0a0506;
+      }
+
+      #poster {
+        position: relative;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: var(--night);
+        color: var(--cream);
+        font-family: "Inter", "IBM Plex Sans Arabic", sans-serif;
+      }
+
+      #art {
+        position: absolute;
+        inset: 0;
+      }
+
+      /* العنوان أعلى البوستر فوق السقف الداكن */
+      /* اسم اللعبة في منتصف البوستر */
+      .head {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        transform: translateY(-50%);
+        text-align: center;
+      }
+
+      /* توهج فاتح خفيف خلف اسم اللعبة */
+      .head::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 1000px;
+        height: 560px;
+        transform: translate(-50%, -50%);
+        background: radial-gradient(ellipse at center, rgba(246, 228, 196, 0.2) 0%, rgba(242, 217, 170, 0.09) 38%, rgba(242, 217, 170, 0) 70%);
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .head {
+        isolation: isolate;
+      }
+
+      .title {
+        margin: 0;
+        font-family: "Roboto Mono", monospace;
+        font-weight: 500;
+        font-size: 230px;
+        line-height: 1;
+        letter-spacing: 0.02em;
+        color: var(--cream);
+        text-shadow: 0 0 28px rgba(242, 217, 170, 0.35), 0 0 90px rgba(242, 217, 170, 0.25);
+      }
+
+      .subtitle {
+        margin: 26px 0 0;
+        font-family: "Cinzel", serif;
+        font-weight: 700;
+        font-size: 44px;
+        letter-spacing: 0.42em;
+        margin-inline-start: 0.42em;
+        color: var(--gold);
+        text-shadow: 0 0 18px rgba(20, 10, 12, 0.95), 0 0 6px rgba(20, 10, 12, 0.9);
+      }
+
+      /* الجملة الوحيدة أسفل البوستر */
+      .tagline {
+        position: absolute;
+        bottom: 150px;
+        left: 0;
+        right: 0;
+        margin: 0;
+        text-align: center;
+        font-family: "Inter", sans-serif;
+        font-size: 30px;
+        letter-spacing: 0.1em;
+        color: var(--cream-dim);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="poster">
+      <svg id="art" viewBox="0 0 1080 1920" width="1080" height="1920" aria-hidden="true"></svg>
+
+      <div class="head" dir="ltr">
+        <h1 class="title">03:17</h1>
+        <p class="subtitle">THE LAST MEMORY</p>
+      </div>
+
+      <p class="tagline" dir="ltr">Some memories never leave.</p>
+    </div>
+
+    <script>
+      // ممر فندق بمنظور نقطة واحدة. كل الأبعاد بوحدات "الممر": العرض ±700 والارتفاع من -900 للسقف إلى 1150 للأرض.
+      const svg = document.getElementById('art');
+      const NS = 'http://www.w3.org/2000/svg';
+      const V = { x: 540, y: 700 }; // نقطة التلاشي
+      const HALF = 700;
+      const TOP = -900;
+      const FLOOR = 1150;
+      const scaleAt = (d) => 1 / (1 + d * 0.62); // العمق → الحجم
+      const P = (X, Y, d) => {
+        const s = scaleAt(d);
+        return [V.x + X * s, V.y + Y * s];
+      };
+      const pts = (list) => list.map((p) => p.map((n) => n.toFixed(1)).join(',')).join(' ');
+      const el = (tag, attrs, parent = svg) => {
+        const e = document.createElementNS(NS, tag);
+        for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
+        parent.appendChild(e);
+        return e;
+      };
+      const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+      const NEAR = -0.32;
+      const FAR = 8.8;
+
+      // تدرجات ومرشحات
+      const defs = el('defs', {});
+      const grad = (id, stops, attrs = {}) => {
+        const g = el('linearGradient', { id, ...attrs }, defs);
+        stops.forEach(([o, c, op = 1]) => el('stop', { offset: o, 'stop-color': c, 'stop-opacity': op }, g));
+      };
+      grad('wallL', [[0, css('--wall-near')], [1, css('--wall-far')]], { x1: 0, y1: 0, x2: 1, y2: 0 });
+      grad('wallR', [[0, css('--wall-far')], [1, css('--wall-near')]], { x1: 0, y1: 0, x2: 1, y2: 0 });
+      grad('fade', [[0, css('--night'), 0], [0.55, css('--night'), 0.78], [1, css('--night'), 0.97]], { x1: 0, y1: 0, x2: 0, y2: 1 });
+      grad('topfade', [[0, css('--night'), 0.92], [1, css('--night'), 0]], { x1: 0, y1: 0, x2: 0, y2: 1 });
+      const rg = el('radialGradient', { id: 'lamp' }, defs);
+      el('stop', { offset: 0, 'stop-color': css('--glow'), 'stop-opacity': 0.55 }, rg);
+      el('stop', { offset: 1, 'stop-color': css('--glow'), 'stop-opacity': 0 }, rg);
+      const vg = el('radialGradient', { id: 'vignette', cx: 0.5, cy: 0.45, r: 0.75 }, defs);
+      el('stop', { offset: 0.55, 'stop-color': '#000', 'stop-opacity': 0 }, vg);
+      el('stop', { offset: 1, 'stop-color': '#000', 'stop-opacity': 0.6 }, vg);
+      const grain = el('filter', { id: 'grain', x: 0, y: 0, width: '100%', height: '100%' }, defs);
+      el('feTurbulence', { type: 'fractalNoise', baseFrequency: 0.85, numOctaves: 2, seed: 7, result: 'n' }, grain);
+      el('feColorMatrix', { type: 'saturate', values: 0, in: 'n', result: 'g' }, grain);
+      el('feComponentTransfer', { in: 'g' }, grain).appendChild(
+        Object.assign(document.createElementNS(NS, 'feFuncA'), {}),
+      );
+      grain.lastChild.firstChild.setAttribute('type', 'linear');
+      grain.lastChild.firstChild.setAttribute('slope', '0.09');
+      const blur = el('filter', { id: 'soft' }, defs);
+      el('feGaussianBlur', { stdDeviation: 6 }, blur);
+
+      // الأسطح الأساسية
+      el('polygon', { points: pts([P(-HALF, TOP, NEAR), P(HALF, TOP, NEAR), P(HALF, TOP, FAR), P(-HALF, TOP, FAR)]), fill: css('--ceiling') });
+      el('polygon', { points: pts([P(-HALF, FLOOR, NEAR), P(HALF, FLOOR, NEAR), P(HALF, FLOOR, FAR), P(-HALF, FLOOR, FAR)]), fill: css('--floor') });
+      el('polygon', { points: pts([P(-HALF, TOP, NEAR), P(-HALF, TOP, FAR), P(-HALF, FLOOR, FAR), P(-HALF, FLOOR, NEAR)]), fill: 'url(#wallL)' });
+      el('polygon', { points: pts([P(HALF, TOP, NEAR), P(HALF, TOP, FAR), P(HALF, FLOOR, FAR), P(HALF, FLOOR, NEAR)]), fill: 'url(#wallR)' });
+      el('polygon', { points: pts([P(-HALF, TOP, FAR), P(HALF, TOP, FAR), P(HALF, FLOOR, FAR), P(-HALF, FLOOR, FAR)]), fill: css('--wall-far') });
+
+      // الخشب السفلي والحاجز الذهبي على الجدارين
+      const RAIL = FLOOR - 520;
+      for (const side of [-1, 1]) {
+        const X = side * HALF;
+        el('polygon', { points: pts([P(X, RAIL, NEAR), P(X, RAIL, FAR), P(X, FLOOR, FAR), P(X, FLOOR, NEAR)]), fill: css('--wainscot') });
+        el('polyline', { points: pts([P(X, RAIL, NEAR), P(X, RAIL, FAR)]), stroke: css('--gold'), 'stroke-width': 5, opacity: 0.75, fill: 'none' });
+        el('polyline', { points: pts([P(X, TOP + 60, NEAR), P(X, TOP + 60, FAR)]), stroke: css('--gold'), 'stroke-width': 3, opacity: 0.35, fill: 'none' });
+      }
+      el('polyline', { points: pts([P(-HALF, RAIL, FAR), P(HALF, RAIL, FAR)]), stroke: css('--gold'), 'stroke-width': 2, opacity: 0.6, fill: 'none' });
+
+      // أبواب الغرف على الجانبين، ومصابيح جدارية بينها
+      const DOOR_TOP = FLOOR - 1500;
+      const doors = [0.5, 2.2, 3.9, 5.6, 7.3];
+      for (const side of [-1, 1]) {
+        const X = side * HALF;
+        doors.forEach((d, i) => {
+          const d0 = d + (side > 0 ? 0.25 : 0);
+          const d1 = d0 + 0.85;
+          el('polygon', { points: pts([P(X, DOOR_TOP - 40, d0 - 0.08), P(X, DOOR_TOP - 40, d1 + 0.08), P(X, FLOOR, d1 + 0.08), P(X, FLOOR, d0 - 0.08)]), fill: css('--gold'), opacity: 0.55 });
+          el('polygon', { points: pts([P(X, DOOR_TOP, d0), P(X, DOOR_TOP, d1), P(X, FLOOR, d1), P(X, FLOOR, d0)]), fill: css('--door') });
+          el('polygon', { points: pts([P(X, DOOR_TOP + 120, d0 + 0.15), P(X, DOOR_TOP + 120, d1 - 0.15), P(X, FLOOR - 140, d1 - 0.15), P(X, FLOOR - 140, d0 + 0.15)]), fill: 'none', stroke: css('--gold'), 'stroke-width': 2, opacity: 0.35 });
+          const [kx, ky] = P(X, FLOOR - 640, side < 0 ? d1 - 0.12 : d0 + 0.12);
+          el('circle', { cx: kx, cy: ky, r: 9 * scaleAt(d1), fill: css('--gold') });
+          // مصباح جداري بعد كل باب
+          const ld = d1 + 0.42;
+          if (ld < FAR - 0.6) {
+            const [lx, ly] = P(X, DOOR_TOP + 60, ld);
+            const s = scaleAt(ld);
+            el('circle', { cx: lx, cy: ly, r: 260 * s, fill: 'url(#lamp)' });
+            el('ellipse', { cx: lx, cy: ly, rx: 30 * s, ry: 44 * s, fill: css('--glow') });
+          }
+        });
+      }
+
+      // السجادة الحمراء بحوافها الذهبية
+      const RUN = 330;
+      el('polygon', { points: pts([P(-RUN, FLOOR, NEAR), P(RUN, FLOOR, NEAR), P(RUN, FLOOR, FAR), P(-RUN, FLOOR, FAR)]), fill: css('--runner') });
+      for (const x of [-RUN + 40, RUN - 40]) {
+        el('polyline', { points: pts([P(x, FLOOR, NEAR), P(x, FLOOR, FAR)]), stroke: css('--gold'), 'stroke-width': 6, opacity: 0.7, fill: 'none' });
+      }
+      // نقوش خفيفة على السجادة توضح العمق
+      for (let d = 0; d < FAR; d += 0.55) {
+        const a = P(0, FLOOR, d);
+        const b = P(-RUN + 90, FLOOR, d + 0.27);
+        const c = P(0, FLOOR, d + 0.55);
+        const e = P(RUN - 90, FLOOR, d + 0.27);
+        el('polygon', { points: pts([a, b, c, e]), fill: 'none', stroke: '#8a3a3c', 'stroke-width': 3 * scaleAt(d) + 0.6, opacity: 0.55 });
+      }
+
+      // الجدار في نهاية الممر، وتتوسطه الساعة واقفة على 03:17
+      const [ccx, ccy] = P(0, (TOP + FLOOR) / 2, FAR);
+      const R = 46;
+      el('circle', { cx: ccx, cy: ccy, r: 150, fill: 'url(#lamp)', opacity: 0.7 });
+      el('circle', { cx: ccx, cy: ccy, r: R + 5, fill: css('--gold') });
+      el('circle', { cx: ccx, cy: ccy, r: R, fill: '#efe3cc' });
+      for (let i = 0; i < 12; i++) {
+        const a = (i / 12) * Math.PI * 2;
+        el('line', { x1: ccx + Math.sin(a) * (R - 8), y1: ccy - Math.cos(a) * (R - 8), x2: ccx + Math.sin(a) * (R - 3), y2: ccy - Math.cos(a) * (R - 3), stroke: '#3a2418', 'stroke-width': 2 });
+      }
+      const hand = (frac, len, w) => {
+        const a = frac * Math.PI * 2;
+        el('line', { x1: ccx, y1: ccy, x2: ccx + Math.sin(a) * len, y2: ccy - Math.cos(a) * len, stroke: '#2a1a12', 'stroke-width': w, 'stroke-linecap': 'round' });
+      };
+      hand((3 + 17 / 60) / 12, R * 0.5, 4);
+      hand(17 / 60, R * 0.78, 3);
+
+      // تدرج داكن أسفل البوستر وأعلاه حتى يبقى النص مقروءًا، ثم لمسة حبيبات وإطار مظلم
+      el('rect', { x: 0, y: 1160, width: 1080, height: 760, fill: 'url(#fade)' });
+      el('rect', { x: 0, y: 0, width: 1080, height: 620, fill: 'url(#topfade)' });
+      el('rect', { x: 0, y: 0, width: 1080, height: 1920, fill: 'url(#vignette)' });
+      el('rect', { x: 0, y: 0, width: 1080, height: 1920, fill: '#fff', filter: 'url(#grain)', opacity: 0.9, style: 'mix-blend-mode: overlay' });
+    </script>
+  </body>
+</html>
